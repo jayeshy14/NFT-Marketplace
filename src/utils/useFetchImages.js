@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
 const useFetchImages = async(marketplaceContract, provider) => {
-
-      if (!provider&&!marketplaceContract) return;
+      if (!provider&&!marketplaceContract) return [];
 
       const totalSupply = await marketplaceContract.nextTokenId();
       const fetchedImages = [];
@@ -24,9 +23,7 @@ const useFetchImages = async(marketplaceContract, provider) => {
           console.error(`Failed to fetch metadata for tokenId ${i}:`, error);
         }
       }
-      console.log(2);
-
-  return fetchedImages;
-};
+      return fetchedImages;
+  }
 
 export default useFetchImages;

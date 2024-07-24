@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import connectWallet from '../utils/connectWallet';
 import MintNFT from "./MintNFT"
- const Header = ({ connected, setConnected, state, setState, cart, setIsModalOpen, setPictures }) => {
+import { useEffect } from 'react';
+import { handleAccountChange } from '../utils/handleAccountChange';
+ const Header = ({ connected, setConnected, state, setState, cart, setIsModalOpen, pictures, setPictures }) => {
   const totalItems = cart.length;
   const handleConnect = async() => {
     const {selectedAccount, provider, marketplaceContract} = await connectWallet();
@@ -13,11 +15,21 @@ import MintNFT from "./MintNFT"
     setIsModalOpen(true);
   };
 
+  // useEffect(() => {
+  //   window.ethereum.on('accountsChanged' , () => handleAccountChange(setState));
+
+  //   return () => {
+  //     window.ethereum.removeListener('accountsChanged', () => handleAccountChange(setState));
+  //   }
+
+  // }, [])
+
   return (
     <header className="flex justify-evenly items-center w-full p-4  bg-blue-700 text-white shadow-lg">
     <MintNFT 
       selectedAccount={state.selectedAccount} 
       marketplaceContract={state.marketplaceContract} 
+      pictures={pictures}
       setPictures={setPictures} 
       provider={state.provider}
     />

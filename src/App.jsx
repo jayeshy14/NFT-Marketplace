@@ -10,16 +10,20 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, setState] = useState({selectedAccount:null, provider:null, marketplaceContract:null});
-  let images;
-  useEffect(()=>{
-    const fetchImages = async() => {
-      if(connected){
-        images = await useFetchImages(state.marketplaceContract, state.provider);
+  const {seclectedAccount, provider, marketplaceContract} = state;
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (marketplaceContract && provider) {
+        const images = await useFetchImages(marketplaceContract, provider);
         setPictures(images);
+        console.log('stop');
       }
-    }
+    };
     fetchImages();
-  },[images, state, cart, connected])
+  }, [connected]);
+
+ 
   return (
     <div className="w-screen mx-auto text-left ">
       <Header 
@@ -29,14 +33,17 @@ const App = () => {
         setIsModalOpen={setIsModalOpen} 
         state={state} 
         setState={setState} 
+        pictures={pictures}
         setPictures={setPictures} 
+        marketplaceContract={marketplaceContract}
+        provider = {provider}
       />
       <Gallery 
         pictures={pictures} 
         setPictures={setPictures}
         cart={cart} 
         setCart={setCart} 
-        marketplaceContract={state.marketplaceContract}
+        marketplaceContract={marketplaceContract}
       />
       {isModalOpen && (
         <Cart 
@@ -49,7 +56,6 @@ const App = () => {
       )}
     </div>
   );
-  
 };
 
 export default App;

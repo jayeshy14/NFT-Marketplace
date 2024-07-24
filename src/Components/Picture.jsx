@@ -1,9 +1,9 @@
 import React from 'react';
-import buyNow from '../utils/buyNow';
+import buyNow from '../utils/buy';
 import useFetchImages from '../utils/useFetchImages';
 const Picture = ({cart, picture, pictures, setPictures, setCart, marketplaceContract }) => {
   const addToCart = (picture) => {
-    if(cart.some(item => item.id === picture.id)){
+    if(cart.some(item => item.tokenId === picture.tokenId)){
       alert("This NFT is already there in your cart!")
     }else{
       setCart([...cart, picture]);
@@ -14,12 +14,15 @@ const Picture = ({cart, picture, pictures, setPictures, setCart, marketplaceCont
   };
 
   const handleBuyNow = async() => {
-    const transaction = await buyNow(marketplaceContract, picture.tokenId, picture.price);
-    if(transaction){
-      console.log(1);
-      const remainingPictures= useFetchImages();
-      setPictures(remainingPictures);
-    }
+    try{
+          const transaction = await buy(marketplaceContract, picture.tokenId, picture.price);
+      if(transaction){
+        const remainingPictures= pictures.filter(temp =>temp.tokenId!==picture.tokenId);
+        setPictures(remainingPictures);
+      }
+      }catch(error){
+        console.log(error);
+      }
 
   }
   return (
@@ -37,13 +40,7 @@ const Picture = ({cart, picture, pictures, setPictures, setCart, marketplaceCont
       </div>
     </div>
   </div>
-  
-
-  
   );
-  
-  
-  
 };
 
 export default Picture;

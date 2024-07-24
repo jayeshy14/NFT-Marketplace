@@ -7,6 +7,10 @@ const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen }) => {
     setIsModalOpen(false);
   };
 
+  const handleRemove = (tokenId) => {
+    setCart(cart.filter(item => item.tokenId !== tokenId));
+  };
+
   const handlePay = async () => {
     try {
       await pay();
@@ -60,10 +64,16 @@ const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen }) => {
                 {cart.map(item => (
                   <li key={item.id} className="flex items-center space-x-4">
                     <img src={item.url} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-                    <div className="flex flex-col">
+                    <div className="flex flex-col flex-grow">
                       <h3 className="text-lg font-medium">{item.name}</h3>
                       <p className="text-gray-600">{item.price} eth</p>
                     </div>
+                    <button
+                      className="text-2xl  text-gray-600 hover:text-gray-800"
+                      onClick={() => handleRemove(item.tokenId)}
+                    >
+                      &times;
+                    </button>
                   </li>
                 ))}
               </ul>

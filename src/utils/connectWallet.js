@@ -19,9 +19,10 @@ import marketplaceABI from "../ABI/marketplaceABI.json";
 
        provider = new ethers.BrowserProvider(window.ethereum);
        signer = await provider.getSigner();
-       const marketplaceContractAddress = "0xAD891c5517B149aEf262DF344451a82FE4d23a01";
+       const marketplaceContractAddress = "0xEb15419946e7E5F2496B575d4e55CD854766c92C";
 
        marketplaceContract= new Contract(marketplaceContractAddress, marketplaceABI, signer);
+       console.log('connected')
        
        return {selectedAccount, provider,  marketplaceContract};
 

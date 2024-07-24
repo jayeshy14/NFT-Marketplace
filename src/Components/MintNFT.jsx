@@ -1,28 +1,29 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { ethers } from 'ethers';
+import useFetchImages from '../utils/useFetchImages';
 
-const MintNFT = ({ selectedAccount, marketplaceContract, setPictures, provider }) => {
+const MintNFT = ({ selectedAccount, marketplaceContract, pictures, setPictures, provider }) => {
   const [uri, setUri] = useState('');
   const [price, setPrice] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const mint = async () => {
     try {
       if (isNaN(price) || parseFloat(price) <= 0) {
         throw new Error('Invalid price. Please enter a positive number.');
       }
-
+      const totalSupply = await marketplaceContract.nextTokenId();
       const priceInWei = ethers.parseEther(price);
-      console.log(selectedAccount, uri, priceInWei);
-      await marketplaceContract.mint(selectedAccount, uri, priceInWei);
-      setIsModalOpen(false); 
+      setIsModalOpen(false);
+      const transaction =await marketplaceContract.mint(selectedAccount, uri, priceInWei);
+      if(transaction){
+           const picture = {tokenId:Number(totalSupply), price:price, url:`https://gold-quick-antelope-719.mypinata.cloud/ipfs/${uri}`, isForSale:true}
+            setPictures([...pictures, picture])   
+      }
+
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }
   };
-
-
-
   return (
     <div>
       <button 
