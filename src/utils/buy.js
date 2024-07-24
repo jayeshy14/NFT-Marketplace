@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import React, { useEffect } from 'react'
 
-const buyNow = async(marketplaceContract, tokenId, price) => {
+const buy = async(marketplaceContract, tokenId, price) => {
     let transaction;
         try{
             const priceInWei = ethers.parseEther(price.toString());
@@ -16,4 +16,4 @@ const buyNow = async(marketplaceContract, tokenId, price) => {
 }
  
 
-export default buyNow
+export default buy

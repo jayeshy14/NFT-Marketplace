@@ -1,5 +1,5 @@
 import React from 'react';
-import buyNow from '../utils/buy';
+import buy from '../utils/buy';
 import useFetchImages from '../utils/useFetchImages';
 const Picture = ({cart, picture, pictures, setPictures, setCart, marketplaceContract }) => {
   const addToCart = (picture) => {
