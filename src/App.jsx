@@ -10,7 +10,7 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, setState] = useState({selectedAccount:null, provider:null, marketplaceContract:null});
-  const {seclectedAccount, provider, marketplaceContract} = state;
+  const {selectedAccount, provider, marketplaceContract} = state;
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -44,6 +44,7 @@ const App = () => {
         cart={cart} 
         setCart={setCart} 
         marketplaceContract={marketplaceContract}
+        selectedAccount={selectedAccount}
       />
       {isModalOpen && (
         <Cart 
@@ -52,6 +53,8 @@ const App = () => {
           setIsModalOpen={setIsModalOpen} 
           pictures={pictures} 
           setPictures={setPictures} 
+          marketplaceContract={marketplaceContract}
+          selectedAccount={selectedAccount}
         />
       )}
     </div>

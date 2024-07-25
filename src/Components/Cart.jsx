@@ -1,8 +1,9 @@
 import React from 'react';
+import buy from '../utils/buy';
 import connectWallet from '../utils/connectWallet';
 import payWithMetamask from '../utils/payWithMetamask';
 
-const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen }) => {
+const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen, marketplaceContract, selecedAccount }) => {
   const closeCart = () => {
     setIsModalOpen(false);
   };
@@ -11,38 +12,25 @@ const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen }) => {
     setCart(cart.filter(item => item.tokenId !== tokenId));
   };
 
-  const handlePay = async () => {
-    try {
-      await pay();
-    } catch (error) {
-      alert("Payment failed!");
-    } finally {
-      setIsModalOpen(false);
-    }
-  };
-
-  const pay = async () => {
-    try {
-      if (cart.length !== 0) {
-        await connectWallet();
-        const to = '0xcC68948b4eE559Cfd58A7A9c2b4b6B244476F0F1';
-        const amount = cart.reduce((total, picture) => total + picture.price, 0);
-        console.log(amount);
-        const transaction = await payWithMetamask(to, amount.toString());
-        console.log(transaction);
-        if (transaction) {
-          setCart([]);
-          const remainingPictures = pictures.filter(picture => !cart.includes(picture));
-          setPictures(remainingPictures);
-        }
-        return transaction;
-      } else {
-        alert("Your cart is empty!");
+  const handleBuy = async(item) => {
+    try{
+      const seller = await marketplaceContract.ownerOf(item.tokenId);
+      if(selecedAccount===seller){
+        throw new Error("You already own the NFT");
       }
-    } catch (error) {
-      console.error("Payment failed:", error);
+
+      const transaction = await buy(marketplaceContract, item.tokenId, item.price);
+      if(transaction){
+        const remainingItems = cart.filter(cartItem => cartItem.tokenId !== item.tokenId);
+        setCart(remainingItems);
+        const remainingPictures = pictures.filter(picture => picture.tokenId !== item.tokenId);
+        setPictures(remainingPictures);
+      }
+
+    }catch(error){
+      console.error(error);
     }
-  };
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -62,36 +50,29 @@ const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen }) => {
             <div className="mt-4 overflow-y-auto max-h-60">
               <ul className="space-y-4">
                 {cart.map(item => (
-                  <li key={item.id} className="flex items-center space-x-4">
+                  <li key={item.tokenId} className="flex items-center space-x-4">
                     <img src={item.url} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
                     <div className="flex flex-col flex-grow">
                       <h3 className="text-lg font-medium">{item.name}</h3>
                       <p className="text-gray-600">{item.price} eth</p>
                     </div>
                     <button
-                      className="text-2xl  text-gray-600 hover:text-gray-800"
-                      onClick={() => handleRemove(item.tokenId)}
+                      className="text-xl bg-green-600  text-white rounded-lg px-2 py-1  hover:text-white"
+                      onClick={() => handleBuy(item)}
                     >
-                      &times;
+                      Buy
+                    </button>
+                    <button
+                      className="text-xl bg-red-600 rounded-lg px-2 py-1  text-white hover:text-gray-800"
+                      onClick={() =>  handleRemove(item.tokenId)}
+                    >
+                      Remove
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="flex justify-between mt-6">
-              <button 
-                className="bg-green-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-transform duration-300" 
-                onClick={handlePay}
-              >
-                Buy all
-              </button>
-              <button 
-                className="bg-red-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition-transform duration-300" 
-                onClick={closeCart}
-              >
-                Cancel
-              </button>
-            </div>
+            
           </>
         )}
       </div>

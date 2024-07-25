@@ -10,19 +10,19 @@ import { handleAccountChange } from '../utils/handleAccountChange';
     setConnected(true);
     setState({selectedAccount, provider, marketplaceContract});
   }  
-
+  let {selectedAccount, provider, marketplaceContract} = state;
   const openCart = () => {
     setIsModalOpen(true);
   };
 
-  // useEffect(() => {
-  //   window.ethereum.on('accountsChanged' , () => handleAccountChange(setState));
+  useEffect(() => {
+    window.ethereum.on('accountsChanged' , () => handleAccountChange(setState));
 
-  //   return () => {
-  //     window.ethereum.removeListener('accountsChanged', () => handleAccountChange(setState));
-  //   }
+    return () => {
+      window.ethereum.removeListener('accountsChanged', () => handleAccountChange(setState));
+    }
 
-  // }, [])
+  }, [])
 
   return (
     <header className="flex justify-evenly items-center w-full p-4  bg-blue-700 text-white shadow-lg">
@@ -33,20 +33,22 @@ import { handleAccountChange } from '../utils/handleAccountChange';
       setPictures={setPictures} 
       provider={state.provider}
     />
-    <button 
-      className={`bg-green-600 text-white py-2 px-4 rounded-lg shadow-md transition-transform duration-300 'hover:scale-105'}`} 
-      onClick={handleConnect} 
-      disabled={connected} 
-      type="button"
-    >
-      {connected ? "Connected" : "Connect Metamask"}
-    </button>
+
     <div 
       className="flex items-center bg-green-600 py-2 px-4 rounded-lg shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" 
       onClick={openCart}
     >
       <span className="text-lg font-semibold">Cart ({totalItems})</span>
     </div>
+    <button 
+      className={`float-right bg-green-600 text-white py-2 px-4 rounded-lg shadow-md transition-transform duration-300 'hover:scale-105'}`} 
+      onClick={handleConnect} 
+      disabled={connected} 
+      type="button"
+    >
+      {connected ?` ${(selectedAccount).substring(0,7)}...${(selectedAccount).substring(selectedAccount.length-5, selectedAccount.length)} ` : "Connect Metamask"}
+    </button>
+
   </header>
   
   );
