@@ -1,7 +1,6 @@
 import React from 'react';
 import buy from '../utils/buy';
-import connectWallet from '../utils/connectWallet';
-import payWithMetamask from '../utils/payWithMetamask';
+
 
 const Cart = ({ cart, setCart, pictures, setPictures, setIsModalOpen, marketplaceContract, selecedAccount }) => {
   const closeCart = () => {

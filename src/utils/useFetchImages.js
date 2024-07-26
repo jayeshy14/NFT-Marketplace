@@ -7,10 +7,12 @@ const useFetchImages = async(marketplaceContract, provider) => {
       const totalSupply = await marketplaceContract.nextTokenId();
       const fetchedImages = [];
       const getImages = await marketplaceContract.getTokens();
-
+      console.log(totalSupply);
+      console.log(getImages);
       for (let i = 0; i < totalSupply; i++) {
         try {
           const uri = await marketplaceContract.tokenURI(i);
+          console.log(uri);
           if(!getImages[i].isForSale)continue;
             fetchedImages.push({
             tokenId: i,

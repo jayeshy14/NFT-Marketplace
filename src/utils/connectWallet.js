@@ -19,7 +19,7 @@ import marketplaceABI from "../ABI/marketplaceABI.json";
 
        provider = new ethers.BrowserProvider(window.ethereum);
        signer = await provider.getSigner();
-       const marketplaceContractAddress = "0xEb15419946e7E5F2496B575d4e55CD854766c92C";
+       const marketplaceContractAddress = "0x482035207606Dccd3C12074869B86152d4867f93";
 
        marketplaceContract= new Contract(marketplaceContractAddress, marketplaceABI, signer);
        console.log('connected')
@@ -34,3 +34,8 @@ import marketplaceABI from "../ABI/marketplaceABI.json";
 }
 
 export default connectWallet;
+
+//polygon zkEvm :0x482035207606Dccd3C12074869B86152d4867f93
+//ethereum sepolia: 0xEb15419946e7E5F2496B575d4e55CD854766c92C
+//new rpc: 0xD0f6026c0A40Dd583ed1658e99aaD2CAA4326f32
+//polygon amoy: 0x482035207606Dccd3C12074869B86152d4867f93

@@ -22,7 +22,7 @@ import { handleAccountChange } from '../utils/handleAccountChange';
       window.ethereum.removeListener('accountsChanged', () => handleAccountChange(setState));
     }
 
-  }, [])
+  }, [state])
 
   return (
     <header className="flex justify-evenly items-center w-full p-4  bg-blue-700 text-white shadow-lg">
