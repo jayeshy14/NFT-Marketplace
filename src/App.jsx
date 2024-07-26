@@ -25,7 +25,7 @@ const App = () => {
 
  
   return (
-    <div className=" mx-auto text-left ">
+    <div className="w-screen bg-gradient-to-r from-teal-500 to-green-500 mx-auto text-left ">
       <Header 
         connected={connected} 
         setConnected={setConnected} 

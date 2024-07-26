@@ -31,21 +31,21 @@ const Gallery = ({ pictures, setPictures, setCart, cart, marketplaceContract, se
   };
 
   return (
-    <div className="flex flex-wrap gap-0.5 justify-center">
+    <div className="flex flex-wrap gap-3 justify-center">
       {pictures.map((picture) => (
-        <div key={picture.tokenId} className="flex flex-col justify-between items-center p-2.5 border border-gray-300 rounded-lg h-100">
+        <div key={picture.tokenId} className="flex flex-col bg-gradient-to-r from-cyan-500 to-gray-300 justify-between items-center py-5 p-5 rounded-lg h-100 shadow-md transition-transform duration-300 hover:scale-105">
           <img src={picture.url} className="w-full max-w-xs h-70 object-contain rounded-lg mb-2.5" />
           <div className="text-center mt-auto">
             <p className="my-1.5 text-lg">{picture.price} eth</p>
             <div className="flex flex-col gap-2">
               <button
-                className="py-2 px-4 bg-blue-500 text-white border-none rounded cursor-pointer hover:bg-blue-700"
+                className="py-2 px-4 bg-gradient-to-r from-blue-400 to-teal-700 text-white border-none rounded cursor-pointer transition-transform duration-300 hover:scale-105"
                 onClick={() => handleAddToCart(picture)}
               >
                 Add to cart
               </button>
               <button
-                className="py-2 px-4 bg-blue-500 text-white border-none rounded cursor-pointer hover:bg-blue-700"
+                className="py-2 px-4 bg-gradient-to-r from-blue-400 to-teal-700 text-white border-none rounded cursor-pointer transition-transform duration-300 hover:scale-105"
                 onClick={() => handleBuyNow(picture)}
               >
                 Buy Now

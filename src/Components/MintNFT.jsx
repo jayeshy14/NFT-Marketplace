@@ -28,7 +28,7 @@ const MintNFT = ({ selectedAccount, marketplaceContract, pictures, setPictures, 
   return (
     <div>
       <button 
-        className="bg-green-600 text-white py-2 px-4 rounded-lg shadow-md transition-transform duration-300 hover:bg-green-700 hover:scale-105"
+        className="bg-gradient-to-r from-teal-700 to-blue-400 text-white py-2 px-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
         onClick={() => setIsModalOpen(true)}
       >
         Mint NFT
