@@ -15,6 +15,7 @@ const MintNFT = ({ selectedAccount, marketplaceContract, pictures, setPictures, 
       const priceInWei = ethers.parseEther(price);
       setIsModalOpen(false);
       const transaction =await marketplaceContract.mint(selectedAccount, uri, priceInWei);
+      console.log(transaction);
       if(transaction){
            const picture = {tokenId:Number(totalSupply), price:price, url:`https://gold-quick-antelope-719.mypinata.cloud/ipfs/${uri}`, isForSale:true}
             setPictures([...pictures, picture])   

@@ -7,12 +7,12 @@ const useFetchImages = async(marketplaceContract, provider) => {
       const totalSupply = await marketplaceContract.nextTokenId();
       const fetchedImages = [];
       const getImages = await marketplaceContract.getTokens();
-      console.log(totalSupply);
-      console.log(getImages);
+      // console.log(totalSupply);
+      // console.log(getImages);
       for (let i = 0; i < totalSupply; i++) {
         try {
           const uri = await marketplaceContract.tokenURI(i);
-          console.log(uri);
+          // console.log(uri);
           if(!getImages[i].isForSale)continue;
             fetchedImages.push({
             tokenId: i,
@@ -20,7 +20,7 @@ const useFetchImages = async(marketplaceContract, provider) => {
             url:`https://gold-quick-antelope-719.mypinata.cloud/ipfs/${uri}`,
             isForSale: getImages[i].isForSale
             });
-            console.log(i);
+            // console.log(i);
         } catch (error) {
           console.error(`Failed to fetch metadata for tokenId ${i}:`, error);
         }

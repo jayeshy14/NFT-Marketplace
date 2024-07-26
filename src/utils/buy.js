@@ -6,6 +6,7 @@ const buy = async(marketplaceContract, tokenId, price) => {
         try{
             const priceInWei = ethers.parseEther(price.toString());
          transaction = await marketplaceContract.purchaseToken(tokenId, {value: priceInWei, gas:4000000});
+         console.log(transaction);
           if(transaction)alert('transaction successfull!');
           return transaction;
         }

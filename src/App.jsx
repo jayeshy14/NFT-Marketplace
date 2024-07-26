@@ -25,7 +25,7 @@ const App = () => {
 
  
   return (
-    <div className="w-screen mx-auto text-left ">
+    <div className=" mx-auto text-left ">
       <Header 
         connected={connected} 
         setConnected={setConnected} 
